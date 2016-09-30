@@ -28,7 +28,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="index.html">Jbee</a>
+	      <a class="navbar-brand" href="/index.html">Jbee</a>
 	    </div>
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -46,7 +46,28 @@
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
-	<h1>Hello!</h1>
+	
+	<div class="container">
+		<table class="table table-condensed">
+			<caption>사용자 목록</caption>
+			<thead>
+				<tr>
+					<th> 사용자 아이디 </th>
+					<th> 사용자 아이디 </th>
+					<th> 사용자 아이디 </th>
+				</tr>				
+			</thead>
+			<tbody>
+				{{#users}}
+				<tr>
+					<th scope="row">{{userId}}</th>
+					<td>{{name}}</td>
+					<td>{{email}}</td>
+				</tr>
+				{{/users}}
+			</tbody>
+		</table>
+	</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
