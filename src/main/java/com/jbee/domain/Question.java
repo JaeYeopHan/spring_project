@@ -1,10 +1,9 @@
 package com.jbee.domain;
 
-import org.hibernate.annotations.Generated;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Created by Jbee on 2016. 10. 14..
@@ -15,15 +14,45 @@ public class Question {
     @GeneratedValue
     private Long id;
 
-    private String writer;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    private User writer;
+
     private String title;
+
+    @Lob
     private String contents;
 
-    public Question(){}
-    public Question(String writer, String title, String contents) {
+    private LocalDateTime createDate;
+
+    @OneToMany(mappedBy = "question")
+    @OrderBy("createDate ASC")
+    private List<Answer> answers;
+
+    public Question() {
+    }
+
+    public Question(User writer, String title, String contents) {
         super();
         this.writer = writer;
         this.title = title;
         this.contents = contents;
+        this.createDate = LocalDateTime.now();
+    }
+
+    public String getFormattedCreateDate() {
+        if (createDate == null) {
+            return "";
+        }
+        return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
+
+    public void update(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
+    public boolean isSameWriter(User sessionedUser) {
+        return this.writer.equals(sessionedUser);//instance는 다르지만 갖고있는 hashcode 값이 같으면 true
     }
 }

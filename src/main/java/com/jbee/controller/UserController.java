@@ -54,7 +54,6 @@ public class UserController {
     //수정된 정보를 다시 저장하는 코드
     @PutMapping("/{id}")
     public String updateUser(@PathVariable Long id, User updatedUser) {
-
         User user = userRepository.findOne(id);
         user.update(updatedUser);
         userRepository.save(user);
