@@ -1,5 +1,7 @@
 package com.jbee.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,54 +11,31 @@ import java.time.format.DateTimeFormatter;
  */
 
 @Entity
-public class Answer {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
+public class Answer extends AbstractEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+    @JsonProperty
     private User writer;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_question"))
+    @JsonProperty
     private Question question;
 
     @Lob
+    @JsonProperty
     private String contents;
-
-    private LocalDateTime createDate;
 
     public Answer() {
     }
 
     public Answer(User writer, String contents, Question question) {
         this.writer = writer;
-        this.createDate = LocalDateTime.now();
         this.contents = contents;
         this.question = question;
     }
 
-    public String getFormattedCreateDate() {
-        if (createDate == null) {
-            return "";
-        }
-        return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Answer answer = (Answer) o;
-
-        return id != null ? id.equals(answer.id) : answer.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public boolean isSameWriter(User loginUser) {
+        return loginUser.equals(this.writer);
     }
 }

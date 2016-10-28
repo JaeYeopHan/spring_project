@@ -26,6 +26,9 @@ public class LoginController {
 	@PostMapping("")
 	public String loginInfo(String userId, String password, HttpSession session){
 		User user = userRepository.findByUserId(userId);
+		if(user == null) {
+			return "redirect:/user/login";
+		}
 		if(HttpSessionUtils.isLoginUser(session)){
 			return "redirect:/user/login";
 		}

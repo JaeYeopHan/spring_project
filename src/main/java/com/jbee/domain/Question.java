@@ -1,5 +1,7 @@
 package com.jbee.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,25 +11,35 @@ import java.util.List;
  * Created by Jbee on 2016. 10. 14..
  */
 @Entity
-public class Question {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Question extends AbstractEntity{
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    @JsonProperty
     private User writer;
 
+    @JsonProperty
     private String title;
 
+    @JsonProperty
+    private Integer countOfAnswer = 0; // default vaule를 지정해줄 때는 이렇게 해줄 수 있는데 import.sql에는 따로 지정해줘야 한다
+
     @Lob
+    @JsonProperty
     private String contents;
 
-    private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question")
     @OrderBy("createDate ASC")
     private List<Answer> answers;
+
+    public void addAnswer() {
+        this.countOfAnswer += 1;
+    }
+
+    public void deleteAnswer() {
+        this.countOfAnswer -= 1;
+    }
 
     public Question() {
     }
@@ -37,14 +49,6 @@ public class Question {
         this.writer = writer;
         this.title = title;
         this.contents = contents;
-        this.createDate = LocalDateTime.now();
-    }
-
-    public String getFormattedCreateDate() {
-        if (createDate == null) {
-            return "";
-        }
-        return createDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
     }
 
     public void update(String title, String contents) {
@@ -55,4 +59,5 @@ public class Question {
     public boolean isSameWriter(User sessionedUser) {
         return this.writer.equals(sessionedUser);//instance는 다르지만 갖고있는 hashcode 값이 같으면 true
     }
+
 }

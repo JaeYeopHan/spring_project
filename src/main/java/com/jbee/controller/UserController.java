@@ -47,7 +47,7 @@ public class UserController {
         if (!id.equals(HttpSessionUtils.getUserFromSession(session).getId())){
             throw new IllegalStateException("error access");
         }
-            model.addAttribute("user", userRepository.findOne(id));
+        model.addAttribute("user", userRepository.findOne(id));
         return "/user/updateForm";
     }
 

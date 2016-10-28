@@ -1,25 +1,25 @@
 package com.jbee.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class User extends AbstractEntity{
 
     @Column(nullable = false, length = 20)
+    @JsonProperty
     private String userId;
+    @JsonIgnore
     private String password;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String email;
-
-    public Long getId() {
-        return id;
-    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -62,21 +62,5 @@ public class User {
         this.password = updatedUser.password;
         this.name = updatedUser.name;
         this.email = updatedUser.email;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return id != null ? id.equals(user.id) : user.id == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }
