@@ -2,8 +2,8 @@ package com.jbee.controller;
 
 import com.jbee.domain.*;
 import com.jbee.utils.HttpSessionUtils;
+import com.jbee.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;

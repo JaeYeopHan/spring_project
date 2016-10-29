@@ -2,7 +2,7 @@ package com.jbee.controller;
 
 import com.jbee.domain.Question;
 import com.jbee.domain.QuestionRepository;
-import com.jbee.domain.Result;
+import com.jbee.utils.Result;
 import com.jbee.domain.User;
 import com.jbee.utils.HttpSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

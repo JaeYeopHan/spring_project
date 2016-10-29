@@ -1,4 +1,4 @@
-package com.jbee;
+package com.jbee.utils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

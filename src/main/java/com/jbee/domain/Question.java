@@ -3,8 +3,6 @@ package com.jbee.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ public class Question extends AbstractEntity{
 
 
     @OneToMany(mappedBy = "question")
-    @OrderBy("createDate ASC")
+    @OrderBy("createDate DESC")
     private List<Answer> answers;
 
     public void addAnswer() {

@@ -8,17 +8,12 @@
 // $('.answer-write input[type=submit]').click(addAnswer);
 
 $(document).ready(function(){
-$('.answer-write input[type=submit]').click(addAnswer);
+    $('.answer-write input[type=submit]').click(addAnswer);
 
     function addAnswer(e) {
-        console.log("click button");
         e.preventDefault();
-        console.log(this);
         var queryString = $('.answer-write').serialize();
-        console.log('[queryString] ' +queryString);
-
         var url = $('.answer-write').attr('action');
-        console.log("[url] ", url);
 
         $.ajax({
             type : 'post',
@@ -44,24 +39,22 @@ $('.answer-write input[type=submit]').click(addAnswer);
     }
 
 
-    $('.qna-comment-slipp-articles').on('click', deleteAnswer);
+    $('.qna-comment-slipp-articles').on('click', '.link-delete-article', deleteAnswer);
 
     function deleteAnswer(e) {
         e.preventDefault();
-        var $deleteBtn = $(this).find('.link-delete-article');
+        var $deleteBtn = $(this);
         var url = $deleteBtn.attr('href');
         $.ajax({
             url : url,
             type : 'DELETE',
             dataType : 'json',
             error : onError,
-            success : function (data, status) {//delete 요청이 성공적으로 이루어지고 서버로부터 응답을 받을 때 실행되는 함수이며 서버로부터 오는 데이터는 data로 받을 수 있다.
-                console.log(data);
-                console.log(status);
+            success : function (data, status) {
                 if (data.valid) {
                     $deleteBtn.closest("article").remove();
                 } else {
-                    alert(data.errorMessage);
+                    alert(data.message);
                 }
             }
         });

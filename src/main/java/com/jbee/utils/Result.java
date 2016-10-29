@@ -1,4 +1,4 @@
-package com.jbee.domain;
+package com.jbee.utils;
 
 /**
  * Created by Jbee on 2016. 10. 21..
